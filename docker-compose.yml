@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+    web:
+        image: nginx:${NGINX_VERSION}
+        volumes:
+            - "./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf"
+            - "./etc/ssl:/etc/ssl"
+            - "./web:/var/www/html/public"
+            - "./etc/nginx/default.template.conf:/etc/nginx/conf.d/default.template"
+        ports:
+            - "800:80"
+            - "810:443"
+        environment:
+            - NGINX_HOST=${NGINX_HOST}
+        command: /bin/sh -c "envsubst '$$NGINX_HOST' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+        restart: always
+        depends_on:
+            - php
+            - mariadb
+
+    php:
+        image: nanoninja/php-fpm:${PHP_VERSION}
+        restart: always
+        volumes:
+            - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
+            - "./web:/var/www/html"
+    # composer:
+    #     image: "composer"
+    #     volumes:
+    #         - "./web/app:/app"
+    #     command: install
+
+    myadmin:
+        image: phpmyadmin/phpmyadmin:${PMA_VERSION}
+        container_name: phpmyadmin
+        ports:
+            - "81:80"
+        environment:
+            # - PMA_PORT=${MARIADB_HOST}
+            - PMA_USER=${MARIADB_ROOT_USER}
+            - PMA_PASSWORD=${MARIADB_ROOT_PASSWORD}
+            - PMA_HOST=${MARIADB_HOST}
+        restart: always
+        depends_on:
+            - mariadb
+
+    mariadb:
+        image: mariadb:${MARIADB_VERSION}
+        container_name: ${MARIADB_HOST}
+        restart: always
+        env_file:
+            - ".env"
+        environment:
+            - MARIADB_DATABASE=${MARIADB_DATABASE}
+            - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+            - MARIADB_USER=${MARIADB_USER}
+            - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+        ports:
+            - "8989:3306"
+        volumes:
+            - "./data/mariadb/data:/var/lib/mysql"
+            - "./data/mariadb/conf.d:/etc/mysql/conf.d"
+
+
+    eggdrop:
+        image: eggdrop:${EGG_VERSION:-latest}
+        container_name: eggdrop
+        env_file:
+            - ".env"
+        environment: 
+            - SERVER=${EGG_SERVER}
+            - NICK=${EGG_NICK}
+### Make this match your listen setting in the config
+        ports:
+            - "3333:3333"
+        depends_on:
+            - mariadb
+### Change this to the path with your config and user/channel files
+        volumes:
+            - ./data/eggdrop/data:/home/eggdrop/eggdrop/data/
+### If you want to add scripts, put them here. Don't mount to /scripts because
+### it will overwrite the ones that are already used. Make sure you use 
+### 'source scripts2/foo.tcl' as the path in the config.
+#     -/changethispart/scripts:/home/eggdrop/eggdrop/scripts2
+### Enter config name, if not eggdrop.conf
+#    command: LeafBlower.conf
+        stdin_open: true
+        tty: true
+        restart: always

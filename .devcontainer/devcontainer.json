@@ -1,0 +1,40 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.245.2/containers/php-mariadb
+// Update the VARIANT arg in docker-compose.yml to pick a PHP version
+{
+	"name": "PNEM DEBIAN DEV",
+	"dockerComposeFile": [
+		"../docker-compose.yml",
+		// "docker-compose.yml"
+	],
+	"service": "app",
+	"workspaceFolder": "/workspace",
+
+	// Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {		
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"xdebug.php-debug",
+				"bmewburn.vscode-intelephense-client",
+				"mrmlnc.vscode-apache",
+				"ms-vscode-remote.remote-containers",
+				"ms-vscode.notepadplusplus-keybindings"
+			]
+		}
+	},
+
+	// phpmyadmin, nginx ssl, nginx, eggdrop, mariadb
+	"forwardPorts": [8080, 3000, 8000, 3333, 8989],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "sudo chmod a+x \"$(pwd)\" && sudo rm -rf /var/www/html && sudo ln -s \"$(pwd)\" /var/www/html"
+
+	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode",
+	"features": {
+		"docker-in-docker": "latest",
+		"docker-from-docker": "latest",
+	}
+}
