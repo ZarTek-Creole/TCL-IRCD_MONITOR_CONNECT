@@ -1,3 +1,6 @@
 data/
 web/app/vendor
 web/app/composer.lock
+etc/nginx/default.conf
+etc/ssl/
+etc/nginx/default.conf

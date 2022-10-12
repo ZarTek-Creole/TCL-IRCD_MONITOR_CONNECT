@@ -5,7 +5,7 @@
 	"name": "PNEM DEBIAN DEV",
 	"dockerComposeFile": [
 		"../docker-compose.yml",
-		// "docker-compose.yml"
+		"docker-compose.yml"
 	],
 	"service": "app",
 	"workspaceFolder": "/workspace",
@@ -27,9 +27,10 @@
 
 	// phpmyadmin, nginx ssl, nginx, eggdrop, mariadb
 	"forwardPorts": [8080, 3000, 8000, 3333, 8989],
-
+	"shutdownAction": "stopCompose",
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "sudo chmod a+x \"$(pwd)\" && sudo rm -rf /var/www/html && sudo ln -s \"$(pwd)\" /var/www/html"
+	"postStartCommand": "make gen-certs; make docker-start",
 
 	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode",
