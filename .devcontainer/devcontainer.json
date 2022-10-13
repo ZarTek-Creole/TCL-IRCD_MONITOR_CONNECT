@@ -28,7 +28,7 @@
 	},
 
 	// phpmyadmin, nginx ssl, nginx, eggdrop, mariadb
-	"forwardPorts": [8080, 3000, 8000, 3333, 8989],
+	"forwardPorts": [81, 82, 83, 84, 85],
 	"shutdownAction": "stopCompose",
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "sudo chmod a+x \"$(pwd)\" && sudo rm -rf /var/www/html && sudo ln -s \"$(pwd)\" /var/www/html"
