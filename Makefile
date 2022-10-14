@@ -1,5 +1,4 @@
 # Makefile for Docker Nginx PHP Composer MySQL
-
 include .env
 
 # MySQL

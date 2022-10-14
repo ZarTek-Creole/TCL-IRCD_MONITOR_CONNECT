@@ -1,10 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.245.2/containers/php-mariadb
-// Update the VARIANT arg in docker-compose.yml to pick a PHP version
 {
 	"name": "PNEM DEBIAN DEV",
 	"dockerComposeFile": [
-		"../docker-compose.yml",
 		"docker-compose.yml"
 	],
 	"service": "app",
@@ -28,16 +25,15 @@
 	},
 
 	// phpmyadmin, nginx ssl, nginx, eggdrop, mariadb
-	"forwardPorts": [81, 82, 83, 84, 85],
-	"shutdownAction": "stopCompose",
+	//"forwardPorts": [810, 830, 840, 850],
+	// "shutdownAction": "stopCompose",
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "sudo chmod a+x \"$(pwd)\" && sudo rm -rf /var/www/html && sudo ln -s \"$(pwd)\" /var/www/html"
-	"postStartCommand": "make gen-certs; make docker-start",
+	// "postStartCommand": "make gen-certs; make docker-start",
 
 	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode",
+	// "remoteUser": "vscode",
 	"features": {
-		"docker-in-docker": "latest",
-		"docker-from-docker": "latest",
+		"docker-in-docker": "latest"
 	}
 }
