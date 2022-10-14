@@ -19,7 +19,9 @@
 				"ms-vscode-remote.remote-containers",
 				"ms-vscode.notepadplusplus-keybindings",
 				"eamodio.gitlens",
-				"evendead.help-me-add"
+				"evendead.help-me-add",
+				"jjppof.vscode-tcl-highlight",
+				"SnirYehuda.tcl-vsc-outline"
 			]
 		}
 	},
