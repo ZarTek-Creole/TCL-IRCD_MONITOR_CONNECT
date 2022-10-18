@@ -78,7 +78,8 @@ services:
         volumes:
             - ../data/eggdrop/data:/home/eggdrop/eggdrop/data/
             - ../IMC.tcl:/home/eggdrop/eggdrop/scripts2/IMC.tcl
-        command: IMC.conf
+            - ./eggdrop_entrypoint.sh:/home/eggdrop/eggdrop/eggdrop_entrypoint.sh
+        entrypoint: [ "/bin/sh", "-c" , "/home/eggdrop/eggdrop/eggdrop_entrypoint.sh"]
         stdin_open: true
         tty: true
         restart: always
