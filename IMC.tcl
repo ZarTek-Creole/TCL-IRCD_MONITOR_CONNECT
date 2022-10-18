@@ -11,10 +11,10 @@ namespace eval ::IMC {
 		"name"				"IMC"
 		"version"			"0.0.1"
 		"auteur"			"ZarTek-Creole"
-		"DieOnError"		1
-		"need_mysqltcl"		3.052
+		"DieOnError"		"1"
+		"need_mysqltcl"		""
 	}
-	if { [catch { package require mysqltcl ${SCRIPT(need_mysqltcl)} } err] } {
+	if { [catch { package require mysqltcl } err] } {
 		set MSG_Err	[format \
 			"\[%s - erreur\] Nécessite le package %s v%s (ou plus) pour fonctionner, Télécharger sur '%s'.\nLe chargement du script a été annulé."								\
 			${SCRIPT(name)}									\
